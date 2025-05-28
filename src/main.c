@@ -25,6 +25,11 @@
     const int player_width = 32;
     const int player_height = 8;
 
+    // score varibles
+    int score = 0;
+    char lable_score[6] = "SCORE\0";
+    char str_score[4] = '0';
+
     void myJoyHandler(u16 joy, u16 changed, u16 state) {
         if (joy == JOY_1) {
             if (state & BUTTON_RIGHT) {
@@ -65,6 +70,15 @@
             ball_vel_y = -ball_vel_y;
         }
 
+        if(ball_pos_x < player_pos_x + player_width && ball_pos_x + ball_width > player_pos_x){
+            if(ball_pos_y < player_pos_y + player_height && ball_pos_y + ball_height >= player_pos_y){
+                //On collision, invert the velocity
+                ball_pos_y = player_pos_y - ball_height - 1;
+                ball_vel_y = -ball_vel_y;
+            }
+        }
+
+        // update position based on velocity
         ball_pos_x += ball_vel_x;
         ball_pos_y += ball_vel_y;
 
